@@ -1,1 +1,1 @@
-# meteorBoilerplate
+# Meteor React Boilerplate
