@@ -1,5 +1,11 @@
 # Meteor React Boilerplate
 
+## Installing Meteor and running tritonproject
+
+Install [Meteor](https://www.meteor.com/install) here
+
+`cd projectname && meteor` and then goto on [Localhost:3000](http://localhost:3000).
+
 ## Packages
 
 ### Removed
