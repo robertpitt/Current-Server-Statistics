@@ -10,6 +10,7 @@ Install [Meteor](https://www.meteor.com/install) 1.2.1 here
 
 ### Removed
 insecure & autopublish
+(These packages allow for rapid development however we remove them because of security and performance reasons)
 
 ### Added
 jsx
