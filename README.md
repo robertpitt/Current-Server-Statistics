@@ -2,7 +2,7 @@
 
 ## Installing Meteor and Running
 
-Install [Meteor](https://www.meteor.com/install) here
+Install [Meteor](https://www.meteor.com/install) 1.2.1 here
 
 `cd projectname && meteor` and then goto on [Localhost:3000](http://localhost:3000).
 
