@@ -1,6 +1,6 @@
 # Meteor React Boilerplate
 
-## Installing Meteor and running tritonproject
+## Installing Meteor and Running
 
 Install [Meteor](https://www.meteor.com/install) here
 
