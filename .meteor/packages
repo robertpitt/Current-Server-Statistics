@@ -33,3 +33,7 @@ accounts-password
 fortawesome:fontawesome
 
 check
+
+# These packages sanjo:jasmine  &&  velocity:html-reporter  are for testing
+sanjo:jasmine
+velocity:html-reporter
