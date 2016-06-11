@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/RedLeap/meteorBoilerplate.svg?branch=master)](https://travis-ci.org/RedLeap/meteorBoilerplate)
+
 # REDLEAP Boilerplate
 This is used to start your apps quickly
 
