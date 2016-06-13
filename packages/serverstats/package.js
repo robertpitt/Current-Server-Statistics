@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'boilerplate-app',
+  name: 'serverstats',
   version: '0.0.1',
   // Brief, one-line summary of the package.
   summary: '',
@@ -13,12 +13,15 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.3.2.4');
   api.use('ecmascript');
-  api.mainModule('boilerplate-app.js');
+  api.use('mongo');
+
+  api.addFiles('serverstats.js');
+  api.export('TestCol',['server','client']);
 });
 
 Package.onTest(function(api) {
   api.use('ecmascript');
   api.use('tinytest');
-  api.use('boilerplate-app');
-  api.mainModule('boilerplate-app-tests.js');
+  api.use('serverstats');
+  api.mainModule('serverstats-tests.js');
 });

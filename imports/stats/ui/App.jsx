@@ -16,13 +16,13 @@ export default class App extends Component {
   render() {
 
     var chartData = {
-      labels: ["January", "February", "March", "April", "May", "June", "July"],
+      labels: ["January", "February", "March", "April", "May", "June", "July"], // index
       datasets: [
           {
               label: "My First dataset",
               responsive: true,
               fillColor: "rgba(0,220,220,0.5)",
-              data: [65, 59, 80, 81, 56, 55, 100],
+              data: [65, 59, 80, 81, 56, 55, 100], // we create an value
           }
       ]
     }
