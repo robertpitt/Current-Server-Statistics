@@ -20,9 +20,11 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 accounts-ui
 accounts-password
 
-boilerplate-app
 react-meteor-data
 fourseven:scss
 kadira:flow-router
 fortawesome:fontawesome
 practicalmeteor:mocha
+
+# Custom application...
+serverstats

@@ -6,9 +6,11 @@
   },
   "dependencies": {
     "bootstrap-sass": "^3.3.6",
+    "chart.js": "1.1.1",
     "meteor-node-stubs": "~0.2.0",
     "react": "^15.1.0",
     "react-addons-pure-render-mixin": "^15.1.0",
+    "react-chartjs": "^0.7.3",
     "react-dom": "^15.1.0",
     "react-mounter": "^1.2.0"
   }
