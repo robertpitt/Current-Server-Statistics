@@ -16,7 +16,7 @@ Package.onUse(function(api) {
   api.use('mongo');
 
   api.addFiles('serverstats.js');
-  api.export('TestCol',['server','client']);
+  api.export('globals',['server','client']);
 });
 
 Package.onTest(function(api) {
