@@ -200,8 +200,10 @@ App.propTypes = {
   stats: PropTypes.array.isRequired
 };
 
+// set properties
 export default createContainer(() => {
   return {
+    // query the Stats collection for the 45 latests inserts..
     stats: Stats.find({}, {sort: { createdAt: -1 }, skip: 0, limit: 45}).fetch()
   };
 }, App);
