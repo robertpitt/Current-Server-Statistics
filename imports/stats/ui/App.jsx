@@ -1,6 +1,6 @@
 /**
  * @file
- *  - THis file contains the component that will wrap the whole
+ *  - This file contains the component that will wrap the whole
  *  application
  */
 import React, { Component, PropTypes } from 'react';
@@ -9,133 +9,167 @@ import { createContainer } from 'meteor/react-meteor-data';
 // theses are the subcompoenents we are pulling in.
 import Header from './components/header/Header.jsx';
 
-// adding line...
+// adding line chart
 var LineChart = require("react-chartjs").Line;
 
 //App component - reporesents the entire application from the top level
 export default class App extends Component {
 
+  /**
+   * Helper method to loop through the stats that are coming in.
+   *
+   * @param  int core - What core do we want to find the stats
+   * @return array    - containing the sys stats
+   */
   getSysStats(core) {
     return this.props.stats.map((stat) => {
       return stat.cpuInfo[ core ].times.sys;
     });
   }
 
+  /**
+   * Helper method to loop through the stats and get user.
+   *
+   * @param  int core - What core do we want to find the stats
+   * @return array    - Containing the user stats
+   */
   getUsrStats(core) {
     return this.props.stats.map((stat) => {
       return stat.cpuInfo[ core ].times.user;
     });
   }
 
-  getLoadStats(core) {
+  /**
+   * Helper method to get the load avg in an array for the chart to read.
+   *
+   * @return array    - Containing the loadAvg stats
+   */
+  getLoadStats() {
     return this.props.stats.map((stat) => {
       return stat.loadAvg;
     });
   }
 
+  // todo function... just in case a machine has 20billion cores
+  getNumberOfCores() {
+    return 4; // hopefully you have atleast four cores :)
+  }
 
-  render() {
+  /**
+   * Get the chart information
+   *
+   * @param   int      core  index we want to get the information from.
+   * @param   string   type  What information do we want to get.
+   * @return  object  This  object will build the chart.
+   */
+  getCoreChartInfo(core, type) {
 
-    var chartData = {
+    // create a dynamic label
+    var typeLabel = (type == 'sys') ? 'Sys' : 'User';
+
+    return {
       labels: [
         "", "", "", "", "", "", "", "", "", "", "", "", "", "",
         "", "", "", "", "", "", "", "", "", "", "", "", "", "",
         "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-      ], // index
-      datasets: [
+      ],
+      datasets: [ {
+        label: "Core " + core + " - " + typeLabel,
+        responsive: true,
+        fillColor: (type == 'sys') ? "rgba(0,20,220,0.5)" :  "rgba(0,200,220,0.5)",
+        data: (type == 'sys') ? this.getSysStats( core ) : this.getUsrStats( core ),
+      }]
+    }
+  }
 
-          {
-              label: "Core 1 - Sys",
-              responsive: true,
-              fillColor: "rgba(0,20,220,0.5)",
-              data:  this.getSysStats(0),
-              //data: [65, 59, 80, 81, 56, 55, 100, 65, 59, 80, 81, 56, 55, 100], // we create an value
-          },
-          {
-              label: "Core 1 - User",
-              responsive: true,
-              fillColor: "rgba(0,220,220,0.5)",
-              data:  this.getUsrStats(0),
-              //data: [65, 59, 80, 81, 56, 55, 100, 65, 59, 80, 81, 56, 55, 100], // we create an value
-          },
+  /**
+   * HELPER method for our chart status..
+   *
+   * @return object  that will help us define what features our chart have...
+   */
+  getChartOptions() {
+    return  {
+       responsive: true,
+       showXAxisLabel: false,
+       animation: false
+    }
+  }
 
+  /**
+   * Helper function to display charts of the number of cores the machine has
+   *
+   * @return string  jsx component.
+   */
+  renderCoreCharts() {
 
-          {
-              label: "Core 2 - Sys",
-              responsive: true,
-              fillColor: "rgba(0,20,220,0.5)",
-              data:  this.getSysStats(1),
-              //data: [15, 29, 90, 81, 16, 5, 0, 15, 29, 90, 81, 16, 5, 0], // we create an value
-          },
-          {
-              label: "Core 2 - User",
-              responsive: true,
-              fillColor: "rgba(0,220,220,0.5)",
-              data:  this.getUsrStats(1),
-              //data: [15, 29, 90, 81, 16, 5, 0, 15, 29, 90, 81, 16, 5, 0], // we create an value
-          },
+    var coreInstance = [];
+    var numberOfCores = this.getNumberOfCores();
 
+    // this whole section could be made into a component.... it self
+    for (var i = 0; i < numberOfCores; i++) {
+      coreInstance.push(
+        <div className="row">
+          <h2> Core {i + 1} </h2>
+          <div className="col-md-6">
+            <h4>Sys</h4>
 
+            <LineChart
+              data={this.getCoreChartInfo(i, 'sys')}
+              options={this.getChartOptions()}
+              redraw
+            />
 
-          {
-              label: "Core 3 - Sys",
-              responsive: true,
-              fillColor: "rgba(0,20,220,0.5)",
-              data:  this.getSysStats(2),
-              //data: [125, 109, 80, 81, 26, 95, 100, 125, 109, 80, 81, 26, 95, 100], // we create an value
-          },
-          {
-              label: "Core 3 - User",
-              responsive: true,
-              fillColor: "rgba(0,220,220,0.5)",
-              data:  this.getUsrStats(2),
-              //data: [125, 109, 80, 81, 26, 95, 100, 125, 109, 80, 81, 26, 95, 100], // we create an value
-          },
+          </div>
+          <div className="col-md-6">
+            <h4>User</h4>
 
+            <LineChart
+              data={this.getCoreChartInfo(i, 'user')}
+              options={this.getChartOptions()}
+              redraw
+            />
 
-          {
-              label: "Core 4 - Sys",
-              responsive: true,
-              fillColor: "rgba(0,20,220,0.5)",
-              data:  this.getSysStats(3),
-              //data: [25, 39, 40, 11, 26, 15, 10, 25, 19, 8, 8, 2, 5, 10], // we create an value
-          },
-          {
-              label: "Core 4 - User",
-              responsive: true,
-              fillColor: "rgba(0,220,220,0.5)",
-              data:  this.getUsrStats(3),
-              //data: [25, 39, 40, 11, 26, 15, 10, 25, 19, 8, 8, 2, 5, 10], // we create an value
-          },
-      ]
+          </div>
+        </div>
+      );
     }
 
-    // this will be the load data....
+    return (
+      <div className="row">
+        {coreInstance}
+      </div>
+    )
+  }
+
+  /**
+   * Helper method to render the chart load data
+   *
+   * @return string  jsx component.
+   */
+  renderLoadChart() {
     var chartLoadData = {
       labels: [
         "", "", "", "", "", "", "", "", "", "", "", "", "", "",
         "", "", "", "", "", "", "", "", "", "", "", "", "", "",
         "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-      ], // index
+      ],
       datasets: [
 
           {
               label: "Load Dataset",
               responsive: true,
-              fillColor: "rgba(0,20,220,0.5)",
+              fillColor: "rgba(0,90,20,0.5)",
               data:  this.getLoadStats(),
-              //data: [65, 59, 80, 81, 56, 55, 100, 65, 59, 80, 81, 56, 55, 100], // we create an value
           }
       ]
     }
 
+    return (
+      <LineChart data={chartLoadData} options={this.getChartOptions()} redraw/>
+    )
+  }
 
-    var chartOptions = {
-       responsive: true,
-       showXAxisLabel: false,
-       animation: false
-    }
-
+  render() {
     return (
       <div className="container">
         <Header />
@@ -144,12 +178,13 @@ export default class App extends Component {
 
           <div className="row">
             <div className='col-md-8'>
-              <h1>Cores</h1>
-              <LineChart data={chartData} options={chartOptions} redraw/>
+              <div className="row">
+                { this.renderCoreCharts() }
+              </div>
             </div>
             <div className="col-md-4">
               <h1>Avg Load</h1>
-              <LineChart data={chartLoadData} options={chartOptions} redraw/>
+                { this.renderLoadChart() }
             </div>
           </div>
 
@@ -160,11 +195,13 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  stats: PropTypes.array.isRequired,
+  stats: PropTypes.array.isRequired
 };
 
+// set properties
 export default createContainer(() => {
   return {
-    stats: Stats.find({}, {sort: { createdAt: -1 }, skip: 0, limit: 45}).fetch(),
+    // query the Stats collection for the 45 latests inserts..
+    stats: Stats.find({}, {sort: { createdAt: -1 }, skip: 0, limit: 45}).fetch()
   };
 }, App);
