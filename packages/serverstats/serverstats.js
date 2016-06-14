@@ -1,19 +1,24 @@
 /**
  * @file
- * [todo short desc]
+ *
+ * This is a package which will make a server_stats collection and push
+ * cpu information and the avgerage load of your machine every
+ * 1000 by default but this can be changes in the
+ * config section
+ *
  */
 
 // imports
 import { Mongo } from 'meteor/mongo';
 import { Meteor } from 'meteor/meteor';
 
-// require
 var os = require('os');
 
 // config
 var interval = 1000;
 
-// globals
+// globals, need to find a better way to export a collection.. rather than make
+// is a global.
 var globals = this || window;
 const Stats = new Mongo.Collection('server_stats');
 globals.Stats = Stats;
@@ -36,8 +41,6 @@ if(Meteor.isServer){
 if(Meteor.isClient){
   Meteor.subscribe('server_stats');
 };
-
-
 
 /**
  * Helper function to get the load avg from the os module
@@ -63,7 +66,6 @@ function getLoadAvg(index) {
 function getCPUSInfo() {
   return os.cpus();   // I was planning on trimming the data...
 }                     // but though against it
-
 
 
 /**
