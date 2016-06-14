@@ -9,25 +9,42 @@ import { createContainer } from 'meteor/react-meteor-data';
 // theses are the subcompoenents we are pulling in.
 import Header from './components/header/Header.jsx';
 
-// adding line...
+// adding line chart
 var LineChart = require("react-chartjs").Line;
 
 //App component - reporesents the entire application from the top level
 export default class App extends Component {
 
+  /**
+   * Helper method to loop through the stats that are coming in.
+   *
+   * @param  int core - What core do we want to find the stats
+   * @return array    - containing the sys stats
+   */
   getSysStats(core) {
     return this.props.stats.map((stat) => {
       return stat.cpuInfo[ core ].times.sys;
     });
   }
 
+  /**
+   * Helper method to loop through the stats and get user.
+   *
+   * @param  int core - What core do we want to find the stats
+   * @return array    - Containing the user stats
+   */
   getUsrStats(core) {
     return this.props.stats.map((stat) => {
       return stat.cpuInfo[ core ].times.user;
     });
   }
 
-  getLoadStats(core) {
+  /**
+   * Helper method to get the load avg in an array for the chart to read.
+   *
+   * @return array    - Containing the loadAvg stats
+   */
+  getLoadStats() {
     return this.props.stats.map((stat) => {
       return stat.loadAvg;
     });
