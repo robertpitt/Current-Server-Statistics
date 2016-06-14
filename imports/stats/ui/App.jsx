@@ -5,11 +5,8 @@
  */
 import React, { Component, PropTypes } from 'react';
 import { createContainer } from 'meteor/react-meteor-data';
-
-// theses are the subcompoenents we are pulling in.
 import Header from './components/header/Header.jsx';
 
-// adding line chart
 var LineChart = require("react-chartjs").Line;
 
 //App component - reporesents the entire application from the top level
@@ -56,7 +53,7 @@ export default class App extends Component {
   }
 
   /**
-   * Get the chart information
+   * HELPER method, to get the chart information
    *
    * @param   int      core  index we want to get the information from.
    * @param   string   type  What information do we want to get.
@@ -64,7 +61,6 @@ export default class App extends Component {
    */
   getCoreChartInfo(core, type) {
 
-    // create a dynamic label
     var typeLabel = (type == 'sys') ? 'Sys' : 'User';
 
     return {
@@ -83,7 +79,7 @@ export default class App extends Component {
   }
 
   /**
-   * HELPER method for our chart status..
+   * HELPER method, for our chart status..
    *
    * @return object  that will help us define what features our chart have...
    */
@@ -96,7 +92,7 @@ export default class App extends Component {
   }
 
   /**
-   * Helper function to display charts of the number of cores the machine has
+   * HELPER function to display charts of the number of cores the machine has
    *
    * @return string  jsx component.
    */
@@ -142,7 +138,7 @@ export default class App extends Component {
   }
 
   /**
-   * Helper method to render the chart load data
+   * HELPER method to render the chart load data
    *
    * @return string  jsx component.
    */
