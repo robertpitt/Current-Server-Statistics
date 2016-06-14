@@ -50,8 +50,15 @@ export default class App extends Component {
     });
   }
 
+  getChartOptions() {
+    return  {
+       responsive: true,
+       showXAxisLabel: false,
+       animation: false
+    }
+  }
 
-  render() {
+  renderCoreCharts() {
 
     var chartData = {
       labels: [
@@ -68,6 +75,7 @@ export default class App extends Component {
               data:  this.getSysStats(0),
               //data: [65, 59, 80, 81, 56, 55, 100, 65, 59, 80, 81, 56, 55, 100], // we create an value
           },
+          /*
           {
               label: "Core 1 - User",
               responsive: true,
@@ -124,8 +132,23 @@ export default class App extends Component {
               data:  this.getUsrStats(3),
               //data: [25, 39, 40, 11, 26, 15, 10, 25, 19, 8, 8, 2, 5, 10], // we create an value
           },
+          */
       ]
     }
+
+    return (
+      <div className="row">
+        <div className="col-md-6">
+          <LineChart data={chartData} options={this.getChartOptions()} redraw/>
+        </div>
+        <div className="col-md-6">
+          <LineChart data={chartData} options={this.getChartOptions()} redraw/>
+        </div>
+      </div>
+    )
+  }
+
+  renderLoadChart() {
 
     // this will be the load data....
     var chartLoadData = {
@@ -146,13 +169,12 @@ export default class App extends Component {
       ]
     }
 
+    return (
+      <LineChart data={chartLoadData} options={this.getChartOptions()} redraw/>
+    )
+  }
 
-    var chartOptions = {
-       responsive: true,
-       showXAxisLabel: false,
-       animation: false
-    }
-
+  render() {
     return (
       <div className="container">
         <Header />
@@ -162,11 +184,15 @@ export default class App extends Component {
           <div className="row">
             <div className='col-md-8'>
               <h1>Cores</h1>
-              <LineChart data={chartData} options={chartOptions} redraw/>
+
+              <div className="row">
+                { this.renderCoreCharts() }
+              </div>
+
             </div>
             <div className="col-md-4">
               <h1>Avg Load</h1>
-              <LineChart data={chartLoadData} options={chartOptions} redraw/>
+                { this.renderLoadChart() }
             </div>
           </div>
 
