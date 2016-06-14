@@ -1,6 +1,6 @@
 /**
  * @file
- *  - THis file contains the component that will wrap the whole
+ *  - This file contains the component that will wrap the whole
  *  application
  */
 import React, { Component, PropTypes } from 'react';
@@ -55,6 +55,13 @@ export default class App extends Component {
     return 4; // hopefully you have atleast four cores :)
   }
 
+  /**
+   * Get the chart information
+   *
+   * @param   int      core  index we want to get the information from.
+   * @param   string   type  What information do we want to get.
+   * @return  object  This  object will build the chart.
+   */
   getCoreChartInfo(core, type) {
 
     // create a dynamic label
@@ -73,9 +80,13 @@ export default class App extends Component {
         data: (type == 'sys') ? this.getSysStats( core ) : this.getUsrStats( core ),
       }]
     }
-
   }
 
+  /**
+   * HELPER method for our chart status..
+   *
+   * @return object  that will help us define what features our chart have...
+   */
   getChartOptions() {
     return  {
        responsive: true,
@@ -84,6 +95,11 @@ export default class App extends Component {
     }
   }
 
+  /**
+   * Helper function to display charts of the number of cores the machine has
+   *
+   * @return string  jsx component.
+   */
   renderCoreCharts() {
 
     var coreInstance = [];
@@ -113,6 +129,11 @@ export default class App extends Component {
     )
   }
 
+  /**
+   * Helper method to render the chart load data
+   *
+   * @return string  jsx component.
+   */
   renderLoadChart() {
 
     // this will be the load data....
@@ -127,9 +148,8 @@ export default class App extends Component {
           {
               label: "Load Dataset",
               responsive: true,
-              fillColor: "rgba(0,20,220,0.5)",
+              fillColor: "rgba(0,90,20,0.5)",
               data:  this.getLoadStats(),
-              //data: [65, 59, 80, 81, 56, 55, 100, 65, 59, 80, 81, 56, 55, 100], // we create an value
           }
       ]
     }
