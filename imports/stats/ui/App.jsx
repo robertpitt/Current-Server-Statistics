@@ -50,6 +50,32 @@ export default class App extends Component {
     });
   }
 
+  // todo function... just in case a machine has 20billion cores
+  getNumberOfCores() {
+    return 4; // hopefully you have atleast four cores :)
+  }
+
+  getCoreChartInfo(core, type) {
+
+    // create a dynamic label
+    var typeLabel = (type == 'sys') ? 'Sys' : 'User';
+
+    return {
+      labels: [
+        "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+        "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+        "", "", "", "", "", "", "", "", "", "", "", "", "", "",
+      ],
+      datasets: [ {
+        label: "Core " + core + " - " + typeLabel,
+        responsive: true,
+        fillColor: "rgba(0,20,220,0.5)",
+        data: (type == 'sys') ? this.getSysStats( core ) : this.getUsrStats( core ),
+      }]
+    }
+
+  }
+
   getChartOptions() {
     return  {
        responsive: true,
@@ -136,14 +162,26 @@ export default class App extends Component {
       ]
     }
 
+    var coreInstance = [];
+    var numberOfCores = this.getNumberOfCores();
+
+    // this whole section could be made into a component.... it self
+    for (var i = 0; i < numberOfCores; i++) {
+      coreInstance.push(
+        <div className="row">
+          <div className="col-md-6">
+            <LineChart data={this.getCoreChartInfo(i, 'sys')} options={this.getChartOptions()} redraw/>
+          </div>
+          <div className="col-md-6">
+            <LineChart data={this.getCoreChartInfo(i, 'user')} options={this.getChartOptions()} redraw/>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="row">
-        <div className="col-md-6">
-          <LineChart data={chartData} options={this.getChartOptions()} redraw/>
-        </div>
-        <div className="col-md-6">
-          <LineChart data={chartData} options={this.getChartOptions()} redraw/>
-        </div>
+        {coreInstance}
       </div>
     )
   }
@@ -203,11 +241,11 @@ export default class App extends Component {
 }
 
 App.propTypes = {
-  stats: PropTypes.array.isRequired,
+  stats: PropTypes.array.isRequired
 };
 
 export default createContainer(() => {
   return {
-    stats: Stats.find({}, {sort: { createdAt: -1 }, skip: 0, limit: 45}).fetch(),
+    stats: Stats.find({}, {sort: { createdAt: -1 }, skip: 0, limit: 45}).fetch()
   };
 }, App);
