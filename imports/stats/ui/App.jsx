@@ -69,7 +69,7 @@ export default class App extends Component {
       datasets: [ {
         label: "Core " + core + " - " + typeLabel,
         responsive: true,
-        fillColor: "rgba(0,20,220,0.5)",
+        fillColor: (type == 'sys') ? "rgba(0,20,220,0.5)" :  "rgba(0,200,220,0.5)",
         data: (type == 'sys') ? this.getSysStats( core ) : this.getUsrStats( core ),
       }]
     }
@@ -86,82 +86,6 @@ export default class App extends Component {
 
   renderCoreCharts() {
 
-    var chartData = {
-      labels: [
-        "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-        "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-        "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-      ], // index
-      datasets: [
-
-          {
-              label: "Core 1 - Sys",
-              responsive: true,
-              fillColor: "rgba(0,20,220,0.5)",
-              data:  this.getSysStats(0),
-              //data: [65, 59, 80, 81, 56, 55, 100, 65, 59, 80, 81, 56, 55, 100], // we create an value
-          },
-          /*
-          {
-              label: "Core 1 - User",
-              responsive: true,
-              fillColor: "rgba(0,220,220,0.5)",
-              data:  this.getUsrStats(0),
-              //data: [65, 59, 80, 81, 56, 55, 100, 65, 59, 80, 81, 56, 55, 100], // we create an value
-          },
-
-
-          {
-              label: "Core 2 - Sys",
-              responsive: true,
-              fillColor: "rgba(0,20,220,0.5)",
-              data:  this.getSysStats(1),
-              //data: [15, 29, 90, 81, 16, 5, 0, 15, 29, 90, 81, 16, 5, 0], // we create an value
-          },
-          {
-              label: "Core 2 - User",
-              responsive: true,
-              fillColor: "rgba(0,220,220,0.5)",
-              data:  this.getUsrStats(1),
-              //data: [15, 29, 90, 81, 16, 5, 0, 15, 29, 90, 81, 16, 5, 0], // we create an value
-          },
-
-
-
-          {
-              label: "Core 3 - Sys",
-              responsive: true,
-              fillColor: "rgba(0,20,220,0.5)",
-              data:  this.getSysStats(2),
-              //data: [125, 109, 80, 81, 26, 95, 100, 125, 109, 80, 81, 26, 95, 100], // we create an value
-          },
-          {
-              label: "Core 3 - User",
-              responsive: true,
-              fillColor: "rgba(0,220,220,0.5)",
-              data:  this.getUsrStats(2),
-              //data: [125, 109, 80, 81, 26, 95, 100, 125, 109, 80, 81, 26, 95, 100], // we create an value
-          },
-
-
-          {
-              label: "Core 4 - Sys",
-              responsive: true,
-              fillColor: "rgba(0,20,220,0.5)",
-              data:  this.getSysStats(3),
-              //data: [25, 39, 40, 11, 26, 15, 10, 25, 19, 8, 8, 2, 5, 10], // we create an value
-          },
-          {
-              label: "Core 4 - User",
-              responsive: true,
-              fillColor: "rgba(0,220,220,0.5)",
-              data:  this.getUsrStats(3),
-              //data: [25, 39, 40, 11, 26, 15, 10, 25, 19, 8, 8, 2, 5, 10], // we create an value
-          },
-          */
-      ]
-    }
-
     var coreInstance = [];
     var numberOfCores = this.getNumberOfCores();
 
@@ -169,10 +93,13 @@ export default class App extends Component {
     for (var i = 0; i < numberOfCores; i++) {
       coreInstance.push(
         <div className="row">
+          <h2> Core {i + 1} </h2>
           <div className="col-md-6">
+            <h4>Sys</h4>
             <LineChart data={this.getCoreChartInfo(i, 'sys')} options={this.getChartOptions()} redraw/>
           </div>
           <div className="col-md-6">
+            <h4>User</h4>
             <LineChart data={this.getCoreChartInfo(i, 'user')} options={this.getChartOptions()} redraw/>
           </div>
         </div>
@@ -221,12 +148,9 @@ export default class App extends Component {
 
           <div className="row">
             <div className='col-md-8'>
-              <h1>Cores</h1>
-
               <div className="row">
                 { this.renderCoreCharts() }
               </div>
-
             </div>
             <div className="col-md-4">
               <h1>Avg Load</h1>
