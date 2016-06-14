@@ -147,8 +147,6 @@ export default class App extends Component {
    * @return string  jsx component.
    */
   renderLoadChart() {
-
-    // this will be the load data....
     var chartLoadData = {
       labels: [
         "", "", "", "", "", "", "", "", "", "", "", "", "", "",
