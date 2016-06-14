@@ -112,11 +112,23 @@ export default class App extends Component {
           <h2> Core {i + 1} </h2>
           <div className="col-md-6">
             <h4>Sys</h4>
-            <LineChart data={this.getCoreChartInfo(i, 'sys')} options={this.getChartOptions()} redraw/>
+
+            <LineChart
+              data={this.getCoreChartInfo(i, 'sys')}
+              options={this.getChartOptions()}
+              redraw
+            />
+
           </div>
           <div className="col-md-6">
             <h4>User</h4>
-            <LineChart data={this.getCoreChartInfo(i, 'user')} options={this.getChartOptions()} redraw/>
+
+            <LineChart
+              data={this.getCoreChartInfo(i, 'user')}
+              options={this.getChartOptions()}
+              redraw
+            />
+
           </div>
         </div>
       );
@@ -142,7 +154,7 @@ export default class App extends Component {
         "", "", "", "", "", "", "", "", "", "", "", "", "", "",
         "", "", "", "", "", "", "", "", "", "", "", "", "", "",
         "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-      ], // index
+      ],
       datasets: [
 
           {
