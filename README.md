@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/RedLeap/meteorBoilerplate.svg?branch=master)](https://travis-ci.org/RedLeap/meteorBoilerplate)
-
 #Current Server Statistics
 
 if your reading this its not ready yet :) here is a sneek peek though...
