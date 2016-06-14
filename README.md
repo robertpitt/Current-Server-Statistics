@@ -10,8 +10,8 @@
 
 ## Custom package
 At `packages/serverstats` is a custom package, All this packages does it run a
-function every `1000ms`, gets the cpuInfo and avgLoad from the machine and
-inserts it into a mongo collection `server_stats`.
+function every `1000ms`, gets the cpuInfo and avgLoad using NodeJS `os` module
+from the machine and inserts it into a mongo collection `server_stats`.
 
 `server_stats` collection is available as a global variable, (although I think
   the best way would be to just export the collection variable itself).
